@@ -28,6 +28,7 @@ class BurgerBuilder extends Component {
     }
 
     componentDidMount = () => {
+        console.log(this.props);
         axios.get('/ingredients.json')
             .then(response => {
                 this.setState({ingredients: response.data})
@@ -57,6 +58,8 @@ class BurgerBuilder extends Component {
 
     purchaseContinueHandler = () => {
         //alert('You continued!');
+        
+        /*
         this.setState({loading: true});
         const order = {
             ingredients : this.state.ingredients,
@@ -80,7 +83,18 @@ class BurgerBuilder extends Component {
         })
         .catch(error => {
             this.setState({loading: false, purchasing: false})
-        });   
+        });
+        */
+       const queryParams = [];
+       for (let ingredient in this.state.ingredients){
+          queryParams.push(encodeURIComponent(ingredient) + '=' + encodeURIComponent(this.state.ingredients[ingredient]))
+       }
+       const queryString = queryParams.join('&');
+       console.log(queryString);
+       this.props.history.push({
+            pathname: 'checkout',
+            search: '?' + queryString
+        });
     }
 
     addIngredientHandler = (type) => {
