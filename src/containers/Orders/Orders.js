@@ -17,7 +17,7 @@ class Orders extends Component {
             const ordersPushed = [];
             for (let key in res.data){
                 // create an array of orders
-                ordersPushed.push({key: key, ...res.data[key]});
+                ordersPushed.push({id: key, ...res.data[key]});
             }
             this.setState({orders: ordersPushed});
         })
@@ -26,10 +26,18 @@ class Orders extends Component {
 
     
     render(){
+        
+        let ordersToShow = null;
+
+        if (this.state.orders !== null){
+            ordersToShow = this.state.orders.map( order => (
+                <Order key={order.id} ingredients={order.ingredients} price={+order.price}/>
+            ));
+        }
+       
         return(
             <div>
-                <Order />
-                <Order />
+                { ordersToShow }
             </div>
         );
     }
