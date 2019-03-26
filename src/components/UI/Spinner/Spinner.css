@@ -5,6 +5,7 @@
     height: 1em;
     border-radius: 50%;
     position: relative;
+    top: 100px;
     text-indent: -9999em;
     -webkit-animation: load5 1.1s infinite ease;
     animation: load5 1.1s infinite ease;

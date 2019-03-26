@@ -23,7 +23,6 @@ class BurgerBuilder extends Component {
         totalPrice: 4,
         purchasable: false,
         purchasing: false,
-        loading: false,
         error: false
     }
 
@@ -131,10 +130,6 @@ class BurgerBuilder extends Component {
                                          cancelPurchase={this.purchaseCancelHandler} 
                                          continuePurchase={this.purchaseContinueHandler}
                                          burgerPrice={this.state.totalPrice}/>;
-        }
-
-        if(this.state.loading){
-            orderSummary = <Spinner />;
         }
 
         return(
