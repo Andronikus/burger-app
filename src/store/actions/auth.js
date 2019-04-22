@@ -31,6 +31,7 @@ export const auth = (email, password, isSignedUp) => {
             password: password,
             returnSecureToken: true
         }
+<<<<<<< HEAD
 
         let url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=' + API_KEY;
 
@@ -39,6 +40,9 @@ export const auth = (email, password, isSignedUp) => {
         }
 
         axios.post(url,authData)
+=======
+        axios.post('https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=[API_KEY]',payload)
+>>>>>>> 845cef287f6fc290bf7ba1d8b713258f3233254e
         .then(response => {
             console.log(response.data);
             dispatch(authSuccess(response.data.localId, response.data.idToken));
