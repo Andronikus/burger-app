@@ -29,7 +29,7 @@ export const auth = (email, password) => {
             password: password,
             returnSecureToken: true
         }
-        axios.post('https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyClQjnfXbiBsVlSRY9D1J5yjKRFor4yvaY',payload)
+        axios.post('https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=[API_KEY]',payload)
         .then(response => {
             console.log(response.data);
             dispatch(authSuccess(response.data));
