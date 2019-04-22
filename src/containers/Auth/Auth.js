@@ -86,13 +86,22 @@ class Auth extends Component {
         this.setState({controls: updatedControls});
     }
 
-    submitHandler = (event) => {
+    submitHandler = (event,isSignedUp) => {
         event.preventDefault();
-        this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value);
+        this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value, isSignedUp);
     }
 
-    render(){
+    signInHandler = (event) => {
+        this.submitHandler(event,false);
+    };
 
+    signUpHandler = (event) => {
+        this.submitHandler(event,true);
+    };
+
+    
+
+    render(){
         const formElementArray = [];
 
         for (let key in this.state.controls){
@@ -111,12 +120,13 @@ class Auth extends Component {
                            changed={(event) => this.inputChangedHandler(event,formElement.id)}/>
                         )
                     );
-
         return (
             <div className={classes.Auth}>
-                <form onSubmit={this.submitHandler}>
+                
+                <form>
                     {form}
-                    <Button btnType="Success">SUBMIT</Button>
+                    <Button btnType="Success" clicked={this.signInHandler}>Sign in</Button>
+                    <Button btnType="Danger" clicked={this.signUpHandler}>Sign up</Button>
                 </form>
             </div>
         );
@@ -125,7 +135,7 @@ class Auth extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (email,password) => dispatch(actions.auth(email,password))
+        onAuth: (email,password, isSignedUp) => dispatch(actions.auth(email,password,isSignedUp))
     }
 }
 
