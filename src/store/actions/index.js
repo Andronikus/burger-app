@@ -1,3 +1,3 @@
 export * from './burgerBuilder';
 export { purchaseInit, purchaseBurger, fetchOrders} from './orders';
-export { auth, authLogout } from './auth';
+export { auth, authLogout, setAuthRedirectPath } from './auth';

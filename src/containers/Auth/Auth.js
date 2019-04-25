@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
@@ -41,6 +43,14 @@ class Auth extends Component {
                 isValid: false,
                 touched: false
             }
+        }
+    }
+
+    componentDidMount(){
+        // if path to redirect stills to checkout but I am not coming from building a burger
+        // then we need to adjust the redirect path to Burger Builder "page"
+        if(!this.props.buildingBurger && this.props.authRedirectPath==='/checkout'){
+            this.props.onSetAuthRedirectPath('/');
         }
     }
 
@@ -131,8 +141,14 @@ class Auth extends Component {
             errorMessage = <p style={{color: 'red'}}>{this.props.error.message}</p>;
         }
 
+        let authRedirect = null;
+        if (this.props.isAuthenticated){
+            authRedirect = <Redirect to={this.props.authRedirectPath}/>
+        }
+
         return (
             <div className={classes.Auth}>
+                {authRedirect}
                 {errorMessage}
                 <form>
                     {form}
@@ -147,13 +163,17 @@ class Auth extends Component {
 const mapStateToProps = state => {
     return {
         loading: state.auth.loading,
-        error: state.auth.error
+        error: state.auth.error,
+        isAuthenticated: state.auth.token !== null,
+        authRedirectPath: state.auth.authRedirectPath,
+        buildingBurger: state.burgerBuilder.building
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (email,password, isSignedUp) => dispatch(actions.auth(email,password,isSignedUp))
+        onAuth: (email,password, isSignedUp) => dispatch(actions.auth(email,password,isSignedUp)),
+        onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/'))
     }
 }
 

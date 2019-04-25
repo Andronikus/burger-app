@@ -55,6 +55,9 @@ export const auth = (email, password, isSignedUp) => {
         axios.post(url, authData)
             .then(response => {
                 console.log(response.data);
+                localStorage.setItem('userId',response.data.localId);
+                localStorage.setItem('token',response.data.idToken);
+                localStorage.setItem('expirationDate',new Date(new Date().getMilliseconds + response.data.expiresIn));
                 dispatch(authSuccess(response.data.localId, response.data.idToken));
                 dispatch(checkAuthTimeout(parseInt(response.data.expiresIn)*1000))
             })
@@ -64,3 +67,10 @@ export const auth = (email, password, isSignedUp) => {
             });
     }
 }
+
+export const setAuthRedirectPath = (path) => {
+    return {
+        type: actionTypes.SET_AUTH_REDIRECT_PATH,
+        path: path
+    }
+} 
