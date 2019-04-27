@@ -8,6 +8,7 @@ import classes from './ContactData.css';
 import * as action from '../../../store/actions/orders';
 import axios from '../../../axios-orders';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
+import { updateObject } from '../../../utils/utility';
 
 class ContactData extends Component {
 
@@ -79,7 +80,8 @@ class ContactData extends Component {
                 },
                 value: '',
                 validation: {
-                    require: true
+                    require: true,
+                    isEmail: true
                 },
                 errorMessage: 'Enter a valid email!',
                 isValid: false,
@@ -149,19 +151,18 @@ class ContactData extends Component {
     }
 
     inputChangedHandler = (event, elementType) => {
-        // copy the orderForm object
-        const orderFormUpdated = {
-            ...this.state.orderForm
-        }
+        
         // copy the elementInput object
-        const elementInputUpdated = {
-            ...orderFormUpdated[elementType]
-        }
-        // bind value with the input element value
-        elementInputUpdated.value = event.target.value;
-        elementInputUpdated.isValid = this.checkValidity(elementInputUpdated.value, elementInputUpdated.validation);
-        elementInputUpdated.touched = true;
-        orderFormUpdated[elementType] = elementInputUpdated;
+        const elementInputUpdated = updateObject(this.state.orderForm[elementType], {
+            value: event.target.value,
+            isValid: this.checkValidity(event.target.value, this.state.orderForm[elementType].validation),
+            touched: true
+        });
+
+        // copy the orderForm object
+        const orderFormUpdated = updateObject(this.state.orderForm,{
+            [elementType]: elementInputUpdated
+        })
 
         let validForm = true;
 
