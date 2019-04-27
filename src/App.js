@@ -15,38 +15,37 @@ class App extends Component {
   componentDidMount() {
     this.props.onTryAutoSignin();
   }
-  
- 
 
-render() {
-  let routers = (
-    <Switch>
-      <Route path="/auth" component={Auth} />
-      <Route path="/" exact component={BurgerBuilder} />
-      <Redirect to="/"/>
-    </Switch>
-  );
-
-  if(this.props.isAuthenticated){
-    routers = (
+  render() {
+    let routers = (
       <Switch>
+        <Route path="/auth" component={Auth} />
+        <Route path="/" exact component={BurgerBuilder} />
+        <Redirect to="/" />
+      </Switch>
+    );
+
+    if (this.props.isAuthenticated) {
+      routers = (
+        <Switch>
           <Route path="/checkout" component={Checkout} />
           <Route path="/orders" component={Orders} />
           <Route path="/logout" component={Logout} />
+          <Route path="/auth" component={Auth} />
           <Route path="/" component={BurgerBuilder} />
-          <Redirect to="/"/>
-      </Switch>
+          <Redirect to="/" />
+        </Switch>
+      );
+    }
+
+    return (
+      <div>
+        <Layout>
+          {routers}
+        </Layout>
+      </div>
     );
   }
-
-  return (
-    <div>
-      <Layout>
-        {routers}
-      </Layout>
-    </div>
-  );
-}
 }
 
 const mapStateToProps = state => {

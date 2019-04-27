@@ -53,7 +53,7 @@ class Auth extends Component {
             this.props.onSetAuthRedirectPath('/');
         }
     }
-
+    
     checkValidity(value, rules){
 
         let isValid = true;
