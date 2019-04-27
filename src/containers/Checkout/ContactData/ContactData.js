@@ -8,7 +8,7 @@ import classes from './ContactData.css';
 import * as action from '../../../store/actions/orders';
 import axios from '../../../axios-orders';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
-import { updateObject } from '../../../utils/utility';
+import { updateObject, checkValidity } from '../../../utils/utility';
 
 class ContactData extends Component {
 
@@ -121,41 +121,12 @@ class ContactData extends Component {
         this.props.onOrderBurger(order, this.props.token);
     }
 
-    checkValidity(value, rules){
-
-        let isValid = true;
-
-        if(rules.require){
-            isValid = isValid && value.trim() !== '';
-        }
-
-        if(rules.minLength){
-            isValid = isValid && value.length >= rules.minLength;
-        }
-
-        if(rules.maxLength){
-            isValid = isValid && value.length <= rules.maxLength;
-        }
-
-        if(rules.isEmail){
-            const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-            isValid = pattern.test(value) && isValid
-        }
-
-        if(rules.isNumeric){
-            const pattern = /^\d+$/;
-            isValid = pattern.test(value) && isValid
-        }
-
-        return isValid;
-    }
-
     inputChangedHandler = (event, elementType) => {
         
         // copy the elementInput object
         const elementInputUpdated = updateObject(this.state.orderForm[elementType], {
             value: event.target.value,
-            isValid: this.checkValidity(event.target.value, this.state.orderForm[elementType].validation),
+            isValid: checkValidity(event.target.value, this.state.orderForm[elementType].validation),
             touched: true
         });
 
