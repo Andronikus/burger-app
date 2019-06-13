@@ -22,7 +22,6 @@ const Auth = React.lazy(() => {
 const app = (props) => {
   // same effect as componentDidMount
   useEffect(() => {
-    console.log('onTryAutoSignin');
     props.onTryAutoSignin();
   }, [])
 
