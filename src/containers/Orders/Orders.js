@@ -8,6 +8,8 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 
 const orders = (props) => {
 
+    console.log('Orders function')
+    
     useEffect(() => {
         props.onFetchOrders(props.token, props.userId);
     }, []);
@@ -45,4 +47,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(WithErrorHandler(orders, axios));
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(WithErrorHandler(orders, axios)));
