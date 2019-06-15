@@ -36,7 +36,7 @@ const app = (props) => {
   if (props.isAuthenticated) {
     routers = (
       <Switch>
-        <Route path="/checkout" component={Checkout} />
+        <Route path="/checkout" render={(props) => <Checkout {...props} />} />
         <Route path="/orders" component={Orders} />
         <Route path="/logout" component={Logout} />
 
