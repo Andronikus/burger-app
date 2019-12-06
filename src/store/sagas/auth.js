@@ -1,6 +1,7 @@
 import { delay } from "redux-saga/effects";
 import { put } from 'redux-saga/effects';
 import axios from 'axios';
+import * as message from '../../utils/messages';
 
 import * as actions from '../actions/index';
 import { API_KEY } from '../../utils/utility';
@@ -42,10 +43,9 @@ export function* authUserSaga(action){
         yield localStorage.setItem('token',response.data.idToken);
         yield localStorage.setItem('expirationDate',expirationDate);
         yield put(actions.authSuccess(response.data.localId, response.data.idToken));
-        yield console.log(response.data.expiresIn);
         yield put(actions.checkAuthTimeout(parseInt(response.data.expiresIn)*1000))
     }catch(error){
-        yield put(actions.authFail(error.response.data.error));
+        yield put(actions.authFail({message: message.AUTH_FAILED}));
     }
 }
 
