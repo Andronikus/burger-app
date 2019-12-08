@@ -64,7 +64,9 @@ export class BurgerBuilder extends Component {
 
         if(this.props.ings){
             burger = <Auxiliary>
-                        <Burger ingredients={this.props.ings}></Burger>
+                        <div style={{width: '100%', margin: 'auto', height: '50%'}}>
+                            <Burger ingredients={this.props.ings}></Burger>
+                        </div>
                         <BuildControls  ingredientAdded={this.props.onIngredientAdded} 
                                         ingredientRemoved={this.props.onIngredientRemoved}
                                         disabled={disableInfo}

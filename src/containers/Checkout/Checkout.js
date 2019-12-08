@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 import ContactData from '../Checkout/ContactData/ContactData';
+import Auxiliary from '../../hoc/Auxiliary/Auxiliary';
 
 class Checkout extends Component{
     
@@ -21,7 +22,7 @@ class Checkout extends Component{
         if (this.props.ingredients){
             const purchasedRedirect = this.props.purchased ? <Redirect to="/"/> : null;
             summary = (
-                <div>
+                <Auxiliary>
                     {purchasedRedirect}
                     <CheckoutSummary 
                         cancelCheckout={this.cancelCheckoutHandler} 
@@ -30,7 +31,7 @@ class Checkout extends Component{
                     />
                     <Route path={this.props.match.path + '/contact-data'} 
                         component={ContactData}/>
-                </div>
+                </Auxiliary>
             );
         }
         return summary
